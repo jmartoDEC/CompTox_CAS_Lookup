@@ -1,0 +1,4 @@
+shiny
+requests
+pandas
+jinja2
