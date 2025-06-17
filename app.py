@@ -22,9 +22,9 @@ def server(input, output, session):
     def update_CAS_buttons():
         theseCAS = input.textCAS.get()
         theseCAS = theseCAS.replace(' ', '')
-        splitCAS = theseCAS.split(',')
-        splitCAS = theseCAS.split('\n')
-        ui.update_radio_buttons('selectCAS', choices=splitCAS)
+        theseCAS = theseCAS.split(',')
+        theseCAS = theseCAS.split('\n')
+        ui.update_radio_buttons('selectCAS', choices=theseCAS)
     @render.text
     def out_text():
         return txt()[1]
