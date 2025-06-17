@@ -3,7 +3,7 @@ import requests
 import pandas as pd
 
 app_ui = ui.page_fluid(
-    ui.input_text_area(id='textCAS', label='Input CAS Numbers:', value='Input comma separated CAS numbers.'),
+    ui.input_text_area(id='textCAS', label='Input CAS Numbers:', value='Input comma separated CAS numbers or on individual lines.'),
     ui.input_action_button(id='updateCAS', label='Update Selections'),
     ui.input_radio_buttons(id='selectCAS', label='Select CAS:', choices=['50-00-0']),
     ui.input_action_button(id='run', label='Run'),
@@ -23,6 +23,7 @@ def server(input, output, session):
         theseCAS = input.textCAS.get()
         theseCAS = theseCAS.replace(' ', '')
         splitCAS = theseCAS.split(',')
+        splitCAS = theseCAS.split('\n')
         ui.update_radio_buttons('selectCAS', choices=splitCAS)
     @render.text
     def out_text():
