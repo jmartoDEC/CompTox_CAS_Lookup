@@ -1,6 +1,7 @@
 from shiny import App, reactive, render, req, ui
 import requests
 import pandas as pd
+import re
 
 app_ui = ui.page_fluid(
     ui.input_text_area(id='textCAS', label='Input CAS Numbers:', placeholder='Input comma separated CAS numbers or on individual lines.'),
@@ -22,9 +23,8 @@ def server(input, output, session):
     def update_CAS_buttons():
         theseCAS = input.textCAS.get()
         theseCAS = theseCAS.replace(' ', '')
-        theseCAS = theseCAS.split(',')
-        theseCAS = theseCAS.split('\n')
-        ui.update_radio_buttons('selectCAS', choices=theseCAS)
+        splitCAS = re.split(',|\n', theseCAS)
+        ui.update_radio_buttons('selectCAS', choices=splitCAS)
     @render.text
     def out_text():
         return txt()[1]
