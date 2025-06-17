@@ -3,7 +3,7 @@ import requests
 import pandas as pd
 
 app_ui = ui.page_fluid(
-    ui.input_text_area(id='textCAS', label='Input CAS Numbers:', value='Input comma separated CAS numbers or on individual lines.'),
+    ui.input_text_area(id='textCAS', label='Input CAS Numbers:', placeholder='Input comma separated CAS numbers or on individual lines.'),
     ui.input_action_button(id='updateCAS', label='Update Selections'),
     ui.input_radio_buttons(id='selectCAS', label='Select CAS:', choices=['50-00-0']),
     ui.input_action_button(id='run', label='Run'),
