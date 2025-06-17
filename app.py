@@ -3,7 +3,9 @@ import requests
 import pandas as pd
 
 app_ui = ui.page_fluid(
-    ui.input_text_area(id='CAS', label='Input CAS Number', value='50-00-0'),
+    ui.input_text_area(id='textCAS', label='Input CAS Numbers:', value='Input comma separated CAS numbers.'),
+    ui.input_action_button(id='updateCAS', label='Update Selections'),
+    ui.input_radio_buttons(id='selectCAS', label='Select CAS:', choices=['50-00-0']),
     ui.input_action_button(id='run', label='Run'),
     ui.output_text_verbatim("out_text"),
     ui.output_data_frame("out_df"),
@@ -12,9 +14,16 @@ app_ui = ui.page_fluid(
 def server(input, output, session):
     @reactive.event(input.run)
     def txt():
-        thiscas = input.CAS.get()
+        thiscas = input.selectCAS.get()
         thisch, fch, fstr = runCAS(str(thiscas))
         return [fch, fstr]
+    @reactive.effect
+    @reactive.event(input.updateCAS)
+    def update_CAS_buttons():
+        theseCAS = input.textCAS.get()
+        theseCAS = theseCAS.replace(' ', '')
+        splitCAS = theseCAS.split(',')
+        ui.update_radio_buttons('selectCAS', choices=splitCAS)
     @render.text
     def out_text():
         return txt()[1]
@@ -283,6 +292,10 @@ def runconversions(inputCAS, chemname, chemmass, chemdensity, chemhazard):
     outputstr = ""
     outputstr = outputstr + ('CompTox Results for CAS Number %s' % str(inputCAS))
     outputstr = outputstr + ('\n%s (CAS# %s) has a reported mass of %s and density of %s' % (str(chemname), str(inputCAS), str(chemmass), str(chemdensity)))
+    if chemdensity == None:
+        outputstr = outputstr + ('\n\nNo density was found in CompTox. A density near 1 is assumed for inhalation result conversions.\n')
+    elif (float(chemdensity) < 0.8) or (float(chemdensity) > 1.2):
+        outputstr = outputstr + ('\nNOTE: the density %s is outside the 0.8-1.2g/cm^3 range. Converted inhalation results should be reviewed.\n' % str(chemdensity))
     outputstr = outputstr + ('\n%s studies were evaluated for toxicity results of %s total studies:\n   %s High Toxicity\n   %s Moderate Toxicity\n   %s Low Toxicity\n' % (str(sumlen), str(totallen), str(highlen), str(modlen), str(lowlen)))
     return ch_mapped, ch_unformat, outputstr
 
