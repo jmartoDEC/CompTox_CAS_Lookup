@@ -279,8 +279,8 @@ def runconversions(inputCAS, chemname, chemmass, chemdensity, chemhazard):
     ch1['reported_dose'] = ch1.apply(gen_reported_dose, axis=1)
     ch1['converted_dose'] = ch1.apply(gen_converted_dose, axis=1)
     ch1 = ch1.loc[ch1['source'] != 'TEST'] #For some reason, there is a TEST row for each compound
-    ch2 = ch1[['toxvalType', 'reported_dose', 'converted_dose', 'exposureRoute', 'speciesCommon', 'tox_designation', 'year', 'source', 'subsource', 'supercategory', 'riskAssessmentClass', 'studyType', 'criticalEffect']].copy()
-    ch_rename = ch2.rename(columns={'toxvalType': 'Test Type', 'reported_dose': 'Reported Dose Value', 'converted_dose': 'Converted Dose Value', 'exposureRoute': 'Exposure Route', 'speciesCommon': 'Species/Organism', 'tox_designation': 'Toxicity', 'year': 'Year', 'source': 'Source/Reference', 'subsource': 'Subsource', 'supercategory': 'Supercategory', 'riskAssessmentClass': 'Risk assessment', 'studyType': 'Study type', 'criticalEffect': 'Critical Effect'})
+    ch2 = ch1[['toxvalType', 'reported_dose', 'converted_dose', 'exposureRoute', 'speciesCommon', 'tox_designation', 'year', 'source', 'subsource', 'riskAssessmentClass', 'studyType', 'toxicologicalEffect']].copy()
+    ch_rename = ch2.rename(columns={'toxvalType': 'Test Type', 'reported_dose': 'Reported Dose Value', 'converted_dose': 'Converted Dose Value', 'exposureRoute': 'Exposure Route', 'speciesCommon': 'Species/Organism', 'tox_designation': 'Toxicity', 'year': 'Year', 'source': 'Source/Reference', 'subsource': 'Subsource', 'riskAssessmentClass': 'Risk assessment', 'studyType': 'Study type', 'toxicologicalEffect': 'Critical Effect'})
     ch_unformat = ch_rename
     totallen = len(ch2['tox_designation'])
     highlen = len(ch2.loc[ch2['tox_designation']=='High'])
