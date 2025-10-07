@@ -41,7 +41,7 @@ def getDTX(cas):
         #Personal API Key here, not for sharing
         'x-api-key': '676c177f-18f8-494c-9936-628f71930cd7',
     }
-    queryurl = 'https://api-ccte.epa.gov/chemical/search/equal/%s' % str(cas)
+    queryurl = 'https://comptox.epa.gov/ctx-api/chemical/search/equal/%s' % str(cas)
     response = requests.get(queryurl, headers=headers)
     if response.status_code == 200:
         print("Successfully connected with CompTox API")
@@ -74,14 +74,14 @@ def getChemInfo(DTXSID):
     params = {
         'projection': 'chemicaldetailall',
     }
-    queryurl = 'https://api-ccte.epa.gov/chemical/detail/search/by-dtxsid/%s' % (str(DTXSID))
+    queryurl = 'https://comptox.epa.gov/ctx-api/chemical/detail/search/by-dtxsid/%s' % (str(DTXSID))
     response = requests.get(queryurl, params=params, headers=headers)
 
     print('Grabbing chemical information for %s' % (str(DTXSID)))
     if response.status_code == 200:
         Chemical_Data = response.json()
         thisname, thismass, thisdensity = Chemical_Data['preferredName'], Chemical_Data['averageMass'], Chemical_Data['density']
-        hazardqueryurl = 'https://api-ccte.epa.gov/hazard/human/search/by-dtxsid/%s' % (str(DTXSID))
+        hazardqueryurl = 'https://comptox.epa.gov/ctx-api/hazard/toxref/data/search/by-dtxsid/%s' % (str(DTXSID))
         hazardresponse = requests.get(hazardqueryurl, params=params, headers=headers)
         if hazardresponse.status_code == 200:
             Hazard_Data = hazardresponse.json()
