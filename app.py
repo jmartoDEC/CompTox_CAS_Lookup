@@ -81,7 +81,7 @@ def getChemInfo(DTXSID):
     if response.status_code == 200:
         Chemical_Data = response.json()
         thisname, thismass, thisdensity = Chemical_Data['preferredName'], Chemical_Data['averageMass'], Chemical_Data['density']
-        hazardqueryurl = 'https://comptox.epa.gov/ctx-api/hazard/human/search/by-dtxsid/%s' % (str(DTXSID))
+        hazardqueryurl = 'https://comptox.epa.gov/ctx-api/hazard/toxval/search/by-dtxsid/%s' % (str(DTXSID))
         hazardresponse = requests.get(hazardqueryurl, params=params, headers=headers)
         if hazardresponse.status_code == 200:
             Hazard_Data = hazardresponse.json()
