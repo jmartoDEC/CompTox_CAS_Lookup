@@ -206,7 +206,7 @@ def convert_units(row):
 #Create clean strings for the reported and converted doses
 def gen_reported_dose(row):
     qualifier = ''
-    thisqual = row['toxvalNumericQualifier']
+    thisqual = row['qualifier']
     if (thisqual != '='):
         qualifier = '%s' % (str(thisqual))
     thisdose = '%s%s %s' % (str(qualifier), str(row['rounded_numeric']), str(row['toxvalUnits']))
@@ -214,7 +214,7 @@ def gen_reported_dose(row):
 
 def gen_converted_dose(row):
     qualifier = ''
-    thisqual = row['toxvalNumericQualifier']
+    thisqual = row['qualifier']
     if (type((row['rounded_tox'])) == float) or (type((row['rounded_tox'])) == int):
         if (thisqual) != '=':
             qualifier = '%s' % (str(thisqual))
